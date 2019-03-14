@@ -1,6 +1,6 @@
 import argparse
 from multiprocessing.pool import ThreadPool
-import numpy as np
+# import numpy as np
 import os
 import time
 
@@ -10,7 +10,7 @@ def GetChunk(dataloc, filename, start, end):
     with open(filename, 'rb') as fin:
         fin.seek(start)
         print('Waiting', start, end)
-        dataloc[start:end] = np.fromfile(fin, dtype=np.int8, count=end-start)
+        dataloc[start:end] = fin.read(end-start)
     print('Ending', start, end)
     return start,end
 
@@ -25,7 +25,7 @@ def MPFileReader(filename, processes, chunksize, cap=None):
         datasize = cap
 
     # Allocate our datasets
-    dataloc = np.empty((datasize,), dtype=np.int8)
+    dataloc = bytes(datasize)
 
     # Location offsets to use
     starts = list(range(0, datasize, chunksize))
