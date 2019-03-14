@@ -34,7 +34,7 @@ def MPFileReader(filename, processes, chunksize, cap=None):
     arguments = zip([dataloc]*len(starts), [filename]*len(starts), starts, ends)
 
     for i, (start,end) in enumerate(pool.starmap(GetChunk, arguments)):
-        print('Finished', start,end)
+        logging.debug(f'Finished {start} to {end}')
 
     return dataloc
 
@@ -55,6 +55,8 @@ if __name__ == '__main__':
     logging.info(f'Time was {time.time() - start}')
 
     if ARGS.validate:
+        logging.info(f'Starting Validation')
         dloc2 = open(ARGS.datafile, 'rb').read()
+        logging.info(f'Validation File Loaded...')
         logging.info(f'Validation: {all(a == b for a, b in zip(dloc.tobytes(), dloc2))}')
     
