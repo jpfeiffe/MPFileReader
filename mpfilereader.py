@@ -11,7 +11,7 @@ def GetChunk(args):
     offset = args[2]
     with open(filename, 'rb') as fin:
         fin.seek(offset)
-        data = fin.read(cs)
+        data = np.fromfile(fin, dtype=np.int8, count=cs)
     print(len(data), offset)
     return data, offset, len(data)
 
@@ -25,14 +25,13 @@ def MPFileReader(filename, processes, chunksize, cap=None):
     print(datasize, cap)
 
     offsets = list(range(0, min(datasize, cap), chunksize))
-    print(offsets)
 
     offsets = list(zip([filename]*len(offsets), [chunksize]*len(offsets), offsets))
 
-    dataloc = []
     print(offsets)
-    for data, offset, datalen in pool.map(GetChunk, offsets):
-        dataloc.extend(data)
+    for i, (data, offset, datalen) in enumerate(pool.map(GetChunk, offsets)):
+        print(i, offset, datalen)
+        dataloc[offset:offset+datalen] = data
 
 
 if __name__ == '__main__':
