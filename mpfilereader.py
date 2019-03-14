@@ -56,7 +56,7 @@ if __name__ == '__main__':
 
     if ARGS.validate:
         logging.info(f'Starting Validation')
-        dloc2 = open(ARGS.datafile, 'rb').read()
+        dloc2 = open(ARGS.datafile, 'rb').read(ARGS.cap)
         logging.info(f'Validation File Loaded...')
         logging.info(f'Validation: {all(a == b for a, b in zip(dloc.tobytes(), dloc2))}')
     
