@@ -32,7 +32,7 @@ if __name__ == '__main__':
     PARSER.add_argument('-d', '--datafile', required=True, help='File to test')
     PARSER.add_argument('-p', '--processes', default=8, type=int, help='Number of processes to use')
     PARSER.add_argument('-c', '--chunksize', default=1000000, type=int, help='Size of chunks to read')
-    PARSER.add_argument('-a', '--cap', default=None, help='Cap the filesize (test)')
+    PARSER.add_argument('-a', '--cap', type=int, default=None, help='Cap the filesize (test)')
     ARGS = PARSER.parse_args()
 
     start = time.time()
