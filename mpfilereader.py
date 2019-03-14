@@ -51,5 +51,5 @@ if __name__ == '__main__':
     dloc = MPFileReader(ARGS.datafile, ARGS.processes, ARGS.chunksize, ARGS.cap)
     print(time.time() - start)
 
-    print(dloc[0:20].tobytes())
+    print(dloc[0:20])
     print(open(ARGS.datafile, 'rb').read(20))
