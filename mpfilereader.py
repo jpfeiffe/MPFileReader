@@ -1,5 +1,5 @@
 import argparse
-import multithreading as mp
+from multiprocessing.pool import ThreadPool
 import numpy as np
 import os
 import time
@@ -17,7 +17,7 @@ def GetChunk(args):
 
 
 def MPFileReader(filename, processes, chunksize, cap=None):
-    pool = mp.Pool(processes)
+    pool = ThreadPool(processes)
     datasize = os.path.getsize(filename)
     
     dataloc = np.empty((datasize, 1), dtype=np.int8)
