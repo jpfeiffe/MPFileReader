@@ -15,6 +15,8 @@ def MPFileReader(filename, processes, chunksize):
             data = fin.read(cs)
         return offset
 
+    pool = mp.Pool(processes)
+
     datasize = os.path.getsize(filename)
 
     offsets = list(range(0, datasize, chunksize))
