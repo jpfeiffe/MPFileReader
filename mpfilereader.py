@@ -45,7 +45,7 @@ if __name__ == '__main__':
     PARSER.add_argument('-p', '--processes', default=8, type=int, help='Number of processes to use')
     PARSER.add_argument('-c', '--chunksize', default=1000000, type=int, help='Size of chunks to read')
     PARSER.add_argument('-a', '--cap', type=int, default=None, help='Cap the filesize (test)')
-    PARSER.add_argument('-v', '--validate', action='store_true', help='validatet the files are identical')
+    PARSER.add_argument('-v', '--validate', action='store_true', help='validatet the files are identical (only use on small data; will reload file!)')
     PARSER.set_defaults(validate=False)
     ARGS = PARSER.parse_args()
     logging.basicConfig(level=logging.DEBUG)
