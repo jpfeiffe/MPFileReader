@@ -5,34 +5,35 @@ import os
 import time
 
 
-def GetChunk(args):
-    filename = args[0]
-    cs = args[1]
-    offset = args[2]
+def GetChunk(filename, start, end):
     with open(filename, 'rb') as fin:
-        fin.seek(offset)
-        data = np.fromfile(fin, dtype=np.int8, count=cs)
-
-    print(offset)
-    return data, offset, len(data)
+        fin.seek(start)
+        data[start:end] = np.fromfile(fin, dtype=np.int8, count=end-start)
+    print(start, end)
+    return len(data)
 
 
 def MPFileReader(filename, processes, chunksize, cap=None):
+    # Threadpool to do the work
     pool = ThreadPool(processes)
+
+    # Size of the dataset to read
     datasize = os.path.getsize(filename)
-    
+    if cap is not None:
+        datasize = cap
+
+    # Allocate our datasets
     dataloc = np.empty((datasize,), dtype=np.int8)
 
-    if cap is None:
-        cap = datasize
+    # Location offsets to use
+    starts = list(range(0, datasize, chunksize))
+    ends = starts[1:] + [datasize]
 
-    offsets = list(range(0, min(datasize, cap), chunksize))
+    arguments = zip([filename]*len(starts), starts, ends)
 
-    offsets = list(zip([filename]*len(offsets), [chunksize]*len(offsets), offsets))
-    for i, (data, offset, datalen) in enumerate(pool.map(GetChunk, offsets)):
-        print(i, offset, datalen)
-        dataloc[offset:offset+datalen] = data
-
+    for i, len(data) in enumerate(pool.map(GetChunk, arguments)):
+        pass
+        
     return dataloc
 
 
