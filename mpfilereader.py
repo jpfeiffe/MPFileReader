@@ -25,7 +25,7 @@ def MPFileReader(filename, processes, chunksize, cap=None):
         datasize = cap
 
     # Allocate our datasets
-    dataloc = bytes(datasize)
+    dataloc = bytearray(datasize)
 
     # Location offsets to use
     starts = list(range(0, datasize, chunksize))
