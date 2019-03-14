@@ -40,5 +40,7 @@ if __name__ == '__main__':
     ARGS = PARSER.parse_args()
 
     start = time.time()
-    MPFileReader(ARGS.datafile, ARGS.processes, ARGS.chunksize, ARGS.cap)
+    dloc = MPFileReader(ARGS.datafile, ARGS.processes, ARGS.chunksize, ARGS.cap)
     print(time.time() - start)
+
+    print(dloc[100:1000].tobytes())
