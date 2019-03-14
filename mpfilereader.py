@@ -12,7 +12,6 @@ def GetChunk(args):
     with open(filename, 'rb') as fin:
         fin.seek(offset)
         data = np.fromfile(fin, dtype=np.int8, count=cs)
-    print(len(data), offset)
     return data, offset, len(data)
 
 
