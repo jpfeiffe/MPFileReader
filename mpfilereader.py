@@ -20,7 +20,7 @@ def MPFileReader(filename, processes, chunksize, cap=None):
     pool = ThreadPool(processes)
     datasize = os.path.getsize(filename)
     
-    dataloc = np.empty((datasize, 1), dtype=np.int8)
+    dataloc = np.empty((datasize,), dtype=np.int8)
 
     print(datasize, cap)
 
