@@ -31,7 +31,7 @@ def MPFileReader(filename, processes, chunksize, cap=None):
 
     print(offsets)
     for data, offset, datalen in pool.map(GetChunk, offsets):
-        dataloc[offset:offset+datalen] = data
+        dataloc[offset:offset+datalen] = data[:]
 
 
 if __name__ == '__main__':
