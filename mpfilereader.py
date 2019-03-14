@@ -15,13 +15,13 @@ def GetChunk(args):
     return data, offset, len(data)
 
 
-def MPFileReader(filename, processes, chunksize):
+def MPFileReader(filename, processes, chunksize, cap=None):
     pool = mp.Pool(processes)
     datasize = os.path.getsize(filename)
     
     dataloc = np.empty((datasize, 1), dtype=np.int8)
 
-    offsets = list(range(0, datasize, chunksize))
+    offsets = list(range(0, min(datasize, cap), chunksize))
     offsets = list(zip([filename]*len(offsets), [chunksize]*len(offsets), offsets))
     for data, offset, datalen in pool.map(GetChunk, offsets):
         dataloc[offset:offset+datalen] = data
@@ -32,8 +32,9 @@ if __name__ == '__main__':
     PARSER.add_argument('-d', '--datafile', required=True, help='File to test')
     PARSER.add_argument('-p', '--processes', default=8, type=int, help='Number of processes to use')
     PARSER.add_argument('-c', '--chunksize', default=1000000, type=int, help='Size of chunks to read')
+    PARSER.add_argument('-a', '--cap', default=None, help='Cap the filesize (test)')
     ARGS = PARSER.parse_args()
 
     start = time.time()
-    MPFileReader(ARGS.datafile, ARGS.processes, ARGS.chunksize)
+    MPFileReader(ARGS.datafile, ARGS.processes, ARGS.chunksize, ARGS.cap)
     print(time.time() - start)
