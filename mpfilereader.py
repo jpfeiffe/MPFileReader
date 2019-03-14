@@ -1,5 +1,5 @@
 import argparse
-import multiprocessing as mp
+import multithreading as mp
 import numpy as np
 import os
 import time
