@@ -22,16 +22,14 @@ def MPFileReader(filename, processes, chunksize, cap=None):
     
     dataloc = np.empty((datasize,), dtype=np.int8)
 
-    print(datasize, cap)
-
     offsets = list(range(0, min(datasize, cap), chunksize))
 
     offsets = list(zip([filename]*len(offsets), [chunksize]*len(offsets), offsets))
-
-    print(offsets)
     for i, (data, offset, datalen) in enumerate(pool.map(GetChunk, offsets)):
         print(i, offset, datalen)
         dataloc[offset:offset+datalen] = data
+
+    return dataloc
 
 
 if __name__ == '__main__':
