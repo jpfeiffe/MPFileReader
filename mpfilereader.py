@@ -24,7 +24,7 @@ def MPFileReader(filename, processes, chunksize):
     offsets = list(range(0, datasize, chunksize))
     offsets = list(zip([filename]*len(offsets), [chunksize]*len(offsets), offsets))
     for offset in pool.map(GetChunk, offsets):
-        print(len(offset))
+        print(offset)
 
 
 if __name__ == '__main__':
