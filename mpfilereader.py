@@ -9,7 +9,7 @@ def GetChunk(args):
     filename = args[0]
     cs = args[1]
     offset = args[2]
-    with open(file, 'rb') as fin:
+    with open(filename, 'rb') as fin:
         fin.seek(offset)
         data = fin.read(cs)
     return offset
@@ -34,4 +34,6 @@ if __name__ == '__main__':
     PARSER.add_argument('-c', '--chunksize', default=1000000, type=int, help='Size of chunks to read')
     ARGS = PARSER.parse_args()
 
+    start = time.time()
     MPFileReader(ARGS.datafile, ARGS.processes, ARGS.chunksize)
+    print(time.time() - start)
