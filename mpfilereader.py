@@ -31,7 +31,7 @@ def MPFileReader(filename, processes, chunksize, cap=None):
 
     arguments = zip([filename]*len(starts), starts, ends)
 
-    for i, l in enumerate(pool.map(GetChunk, arguments)):
+    for i, l in enumerate(pool.starmap(GetChunk, arguments)):
         pass
 
     return dataloc
