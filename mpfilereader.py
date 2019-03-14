@@ -5,15 +5,17 @@ import os
 import time
 
 
+def GetChunk(args):
+    filename = args[0]
+    cs = args[1]
+    offset = args[2]
+    with open(file, 'rb') as fin:
+        fin.seek(offset)
+        data = fin.read(cs)
+    return offset
+
+
 def MPFileReader(filename, processes, chunksize):
-    def GetChunk(args):
-        filename = args[0]
-        cs = args[1]
-        offset = args[2]
-        with open(file, 'rb') as fin:
-            fin.seek(offset)
-            data = fin.read(cs)
-        return offset
 
     pool = mp.Pool(processes)
 
