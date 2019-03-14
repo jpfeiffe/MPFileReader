@@ -12,7 +12,7 @@ def GetChunk(dataloc, filename, start, end):
         print('Waiting', start, end)
         dataloc[start:end] = np.fromfile(fin, dtype=np.int8, count=end-start)
     print('Ending', start, end)
-    return len(data)
+    return start,end
 
 
 def MPFileReader(filename, processes, chunksize, cap=None):
@@ -31,10 +31,12 @@ def MPFileReader(filename, processes, chunksize, cap=None):
     starts = list(range(0, datasize, chunksize))
     ends = starts[1:] + [datasize]
 
+    print(zip(starts, ends))
+    exit()
     arguments = zip([dataloc]*len(starts), [filename]*len(starts), starts, ends)
 
-    for i, l in enumerate(pool.starmap(GetChunk, arguments)):
-        pass
+    for i, (start,end) in enumerate(pool.starmap(GetChunk, arguments)):
+        print(start,end)
 
     return dataloc
 
