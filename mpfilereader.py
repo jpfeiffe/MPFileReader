@@ -5,11 +5,13 @@ import os
 import time
 
 
-def GetChunk(filename, start, end):
+def GetChunk(dataloc, filename, start, end):
+    print('Beginning', start, end)
     with open(filename, 'rb') as fin:
         fin.seek(start)
-        data[start:end] = np.fromfile(fin, dtype=np.int8, count=end-start)
-    print(start, end)
+        print('Waiting', start, end)
+        dataloc[start:end] = np.fromfile(fin, dtype=np.int8, count=end-start)
+    print('Ending', start, end)
     return len(data)
 
 
@@ -29,7 +31,7 @@ def MPFileReader(filename, processes, chunksize, cap=None):
     starts = list(range(0, datasize, chunksize))
     ends = starts[1:] + [datasize]
 
-    arguments = zip([filename]*len(starts), starts, ends)
+    arguments = zip([dataloc]*len(starts), [filename]*len(starts), starts, ends)
 
     for i, l in enumerate(pool.starmap(GetChunk, arguments)):
         pass
