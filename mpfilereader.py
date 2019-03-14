@@ -31,7 +31,7 @@ def MPFileReader(filename, processes, chunksize, cap=None):
     starts = list(range(0, datasize, chunksize))
     ends = starts[1:] + [datasize]
 
-    print(zip(starts, ends))
+    print(list(zip(starts, ends)))
     exit()
     arguments = zip([dataloc]*len(starts), [filename]*len(starts), starts, ends)
 
